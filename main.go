@@ -97,6 +97,8 @@ func MakePost(ctx *fasthttp.RequestCtx) {
 }
 
 var upgrader = websocket.New(postReceiver)
+// Edit from September 2018, after knowing much more Go: This is a very bad idea
+// and causes a race condition, but I didn't know this and just wanted a quick fix. It works, somewhat.
 var PlaceId int64
 func PostServiceUpgrade(ctx *fasthttp.RequestCtx) {
 	placeId := string(ctx.QueryArgs().Peek("id"))
@@ -153,6 +155,9 @@ func postReceiver(c *websocket.Conn) {
 func main() {
 	go postQueueServer(serverQueue)
 	router := fasthttprouter.New()
+	// Also edit from September 2018: I actually made an initial version of this
+	// at school, in JSP (without real-time), because Tomcat was the only server
+	// I could run on my school computers, but that version is long gone by now, sorry.
 	router.GET("/api/places.jsp", ListPlaces)
 	router.GET("/api/posts.jsp", ListPosts)
 	router.POST("/api/createPost.jsp", MakePost)
