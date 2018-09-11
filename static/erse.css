@@ -1,0 +1,35 @@
+body {
+	font-family: sans-serif;
+}
+pre {
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+.post {
+	box-sizing: border-box;
+	width: auto;
+	height: auto;
+	padding: 2px;
+	border: 1px solid black;
+	margin-bottom: 4px;
+}
+.live {
+	background-color: rgba(160, 199, 64, 0.5);
+}
+.mine {
+	background-color: rgba(78, 137, 232, 0.5);
+}
+.place {
+	box-sizing: border-box;
+	width: auto;
+	height: auto;
+	padding: 2px;
+	border: 1px solid black;
+	margin-bottom: 4px;
+}
+img {
+	border: 1px solid white;
+	max-width: 128px;
+	max-height: 128px;
+	border-radius: 5px;
+}

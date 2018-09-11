@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="data:;base64,=">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7">
+
+    <title>erse</title>
+    <link href="/static/erse.css" rel="stylesheet">
+    <script type="text/x-template" id="places-template">
+         <div>
+              <p style="margin-top:2px;" v-show="!loading">hello!!!!!!!</p>
+              <span style="font-size:72px" v-show="loading">Now loading...</span>
+              <div class="places-list" v-if="!loading">
+                   <h1>Places!!!!</h1>
+                   <p>Showing {{ places.length }} of them</p>
+                   <ul>
+                        <span style="font-size:72px" v-show="places.length <= 0">hmm i wonder why there are none of them</span>
+                             <div class="place" v-for="place in places">
+                                  <router-link :to="'/place/' + place.id"><span style="font-size:36">{{ place.name }}</span></router-link>
+                                  <br><p>{{ place.description }}</p>
+                                  <img v-bind:src="place.image">
+                                  <br>{{ place.count }} posts
+                             </div>
+                   </ul>
+              </div>
+         </div>
+    </script>
+    <script type="text/x-template" id="posts-template">
+         <div>
+              <router-link to="/" v-show="!loading">home</router-link>
+              <span style="font-size:72px" v-show="loading">Now loading...</span>
+              <div class="posts-list" v-if="!loading">
+                   <h1>{{ posts.place.name }}</h1>
+                   <p>{{ posts.place.description }}</p>
+                   <img v-bind:src="posts.place.image">
+                   <br>
+                   <span style="font-size:72px;color:red" v-show="error">{{ error }}</span>
+                   <form method="post" v-on:submit.prevent="sendForm()">
+                        <input type="text" name="name" v-model="name" placeholder="your name 2"> <span style="color:red" v-show="noName">← RIGHT HERE</span>
+                        <br><br>
+                        <textarea name="message" v-model="text" style="width:500px;height:200px" placeholder="type something here, don't worry we will all be able to see it ;)));00)):):);0;00;):))"></textarea>
+                        <span style="color:red" v-show="noMessage">← RIGHT HERE</span>
+                        <span style="font-size:72;color:red" v-show="noName">enter your name idiot</span>
+                        <span style="font-size:72;color:blue" v-show="noName && noMessage"> && </span>
+                        <span style="font-size:72;color:red" v-show="noMessage">enter a message idiot</span>
+                        <br>
+                        <input type="submit" value="seND" v-show="!sending">
+                        <input type="submit" value="Please wait..." v-show="sending" disabled="disabled">
+                   </form>
+                   <h2>here are the posts</h2>
+                   <p>Showing {{ posts.messages.length }}</p>
+                   <ul>
+                        <span style="font-size:72px" v-show="posts.messages.length <= 0">oh no there are none!</span>
+                             <div class="posts">
+                                  <div class="post" v-bind:class="{post: 1, live: !!post.live, mine: post.name == name}" v-for="post in posts.messages">
+                                       id #{{ post.id }}, from: <em>{{ post.name }}</em>
+                                       <br><pre>{{ post.message }}</pre>
+                                  </div>
+                             </div>
+                   </ul>
+              </div>
+         </div>
+    </script>
+    </head>
+
+  <body>
+     <div id="app">
+          <router-view></router-view>
+     </div>
+    <script src="/static/lib/jquery-3.2.1.slim.min.js"></script>
+    <script src="/static/lib/vue.min.js"></script>
+    <script src="/static/lib/vue-resource.min.js"></script>
+    <script src="/static/lib/vue-router.min.js"></script>
+    <script src="/static/erse.js"></script>
+  </body>
+</html>
